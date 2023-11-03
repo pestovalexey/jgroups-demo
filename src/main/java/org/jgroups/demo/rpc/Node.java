@@ -37,7 +37,7 @@ public class Node<P> implements Receiver, Closeable {
 
     /**
      * @param name    Node name
-     * @param payload Payload list to balance in a Cluster
+     * @param payload Payload list to balance in a cluster
      */
     public Node(String name, List<P> payload) {
         this(name, payload, "raft.xml");
@@ -45,7 +45,7 @@ public class Node<P> implements Receiver, Closeable {
 
     /**
      * @param name         Node name
-     * @param payload      Payload list to balance in a Cluster
+     * @param payload      Payload list to balance in a cluster
      * @param jGroupConfig JGroups config Xml file
      */
     public Node(String name, List<P> payload, String jGroupConfig) {
@@ -147,7 +147,7 @@ public class Node<P> implements Receiver, Closeable {
     }
 
     /**
-     * @param payload Updated Payload to balance in a Cluster
+     * @param payload new
      */
     public void setPayload(List<P> payload) {
         this.payload.clear();
@@ -180,7 +180,7 @@ public class Node<P> implements Receiver, Closeable {
     }
 
     /**
-     * @param node Node to add to a Cluster
+     * @param node to add to a cluster
      * @throws Exception e
      */
     public void addNode(String node) throws Exception {
@@ -188,7 +188,7 @@ public class Node<P> implements Receiver, Closeable {
     }
 
     /**
-     * @param node Node to remove from a Cluster
+     * @param node to remove from a cluster
      * @throws Exception e
      */
     public void removeNode(String node) throws Exception {
