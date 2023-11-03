@@ -112,8 +112,7 @@ public class Node<P> implements Receiver, Closeable {
     }
 
     private void rebalance(View view) {
-        Rebalance<P> rebalance = new Rebalance<>(
-                payload,
+        Rebalance<P> rebalance = new Rebalance<>(payload,
                 view.getMembers(),
                 rpcDispatcher
         );
