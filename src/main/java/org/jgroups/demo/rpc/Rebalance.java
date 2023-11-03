@@ -3,9 +3,12 @@ package org.jgroups.demo.rpc;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jgroups.Address;
+import org.jgroups.blocks.MethodCall;
 import org.jgroups.blocks.RequestOptions;
+import org.jgroups.blocks.ResponseMode;
 import org.jgroups.blocks.RpcDispatcher;
 
+import java.lang.reflect.Method;
 import java.util.List;
 
 @Slf4j
@@ -15,27 +18,30 @@ public class Rebalance<P> implements Runnable {
     private final List<P> payload;
     private final List<Address> nodes;
     private final RpcDispatcher dispatcher;
+    private final Node<P> nodeApp;
 
     @Override
     public void run() {
         log.info("Rebalance...");
         try {
             stopAll();
-            roundRobinStart();
+            startRoundRobin();
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
     }
 
     private void stopAll() throws Exception {
-        dispatcher.callRemoteMethods(null, "stopAll", null, null, RequestOptions.SYNC());
+        String name = "stopAll";
+        Method method = Node.class.getMethod(name);
 
-        //Method method = Node.class.getMethod(name);
-        //MethodCall call = new MethodCall(method);
+        // MethodCall call = new MethodCall(method);
         //RequestOptions opts = new RequestOptions(ResponseMode.GET_ALL, 0);
+
+        dispatcher.callRemoteMethods(null, name, null, null, RequestOptions.SYNC());
     }
 
-    private void roundRobinStart() throws Exception {
+    private void startRoundRobin() throws Exception {
         int n = 0;
         for (P payload : payload) {
             Address node = nodes.get(n);
@@ -47,14 +53,11 @@ public class Rebalance<P> implements Runnable {
     }
 
     private void start(Address node, P payload) throws Exception {
-        StartObject<P> arg = new StartObject<>(payload);
-        dispatcher.callRemoteMethod(node, "start", new Object[]{arg},
-                new Class[]{StartObject.class},
-                RequestOptions.SYNC()
-        );
-        //Method method = Node.class.getMethod(name, StartObject.class);
-        //MethodCall call = new MethodCall(method, arg);
+        Method method = nodeApp.getClass().getMethod("start", Object.class);
+        MethodCall call = new MethodCall(method, payload);
         //RequestOptions opts = new RequestOptions(ResponseMode.GET_ALL, 0);
+
+        dispatcher.callRemoteMethod(node, call, RequestOptions.SYNC());
 
     }
 }

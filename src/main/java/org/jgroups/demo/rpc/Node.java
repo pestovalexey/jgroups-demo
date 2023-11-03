@@ -6,7 +6,6 @@ import org.jgroups.JChannel;
 import org.jgroups.Receiver;
 import org.jgroups.View;
 import org.jgroups.blocks.RpcDispatcher;
-import org.jgroups.demo.norpc.StartObject;
 import org.jgroups.demo.rpc.exception.NodeException;
 import org.jgroups.demo.rpc.listener.StartListener;
 import org.jgroups.demo.rpc.listener.StopListener;
@@ -34,7 +33,7 @@ public class Node<P> implements Receiver, Closeable {
 
     private final JChannel jChannel;
     private final RaftHandle raftHandle;
-    private final RpcDispatcher rpcDispatcher;
+    private final RpcDispatcher dispatcher;
 
     /**
      * @param name    Node name
@@ -56,8 +55,8 @@ public class Node<P> implements Receiver, Closeable {
             jChannel.setReceiver(this);
             jChannel.name(name);
 
-            rpcDispatcher = new RpcDispatcher(jChannel, this);
-            rpcDispatcher.setReceiver(this);
+            dispatcher = new RpcDispatcher(jChannel, this);
+            dispatcher.setReceiver(this);
 
             raftHandle = new RaftHandle(jChannel, null);
             raftHandle.raftId(name);
@@ -114,8 +113,10 @@ public class Node<P> implements Receiver, Closeable {
 
     private void rebalance(View view) {
         List<Address> nodes = view.getMembers();
-        Rebalance<P> rebalance = new Rebalance<>(payload, nodes,
-                rpcDispatcher
+        Rebalance<P> rebalance = new Rebalance<>(
+                payload, nodes,
+                dispatcher,
+                this
         );
         Thread t = new Thread(rebalance);
         t.setDaemon(false);
@@ -135,9 +136,9 @@ public class Node<P> implements Receiver, Closeable {
         }
     }
 
-    public void start(StartObject<P> object) {
-        notifyStartListeners(object.getPayload());
-        payloadLocal.add(object.getPayload());
+    public void start(P payload) {
+        notifyStartListeners(payload);
+        payloadLocal.add(payload);
     }
 
     private void notifyStartListeners(P payload) {
@@ -175,7 +176,7 @@ public class Node<P> implements Receiver, Closeable {
 
     @Override
     public void close() throws IOException {
-        rpcDispatcher.close();
+        dispatcher.close();
         jChannel.close();
     }
 

@@ -7,9 +7,8 @@ import java.io.Serializable;
 
 @Slf4j
 @RequiredArgsConstructor
-class Config implements Serializable {
-    private final static long serialVersionUID = 3672034987577017282L;
-
+public class Config implements Serializable {
+    private final static long serialVersionUID = 3672034987577016212L;
     private final long id;
 
     public void start() {
