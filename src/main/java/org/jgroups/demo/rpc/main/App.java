@@ -26,6 +26,7 @@ class App {
         waitQuit();
 
         node.close();
+        in.close();
     }
 
     static void waitQuit() throws IOException {
