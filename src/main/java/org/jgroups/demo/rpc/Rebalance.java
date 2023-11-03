@@ -38,9 +38,9 @@ public class Rebalance<P> implements Runnable {
     private void startRoundRobin() throws Exception {
         int n = 0;
         for (P payload : payload) {
-            Address node = nodes.get(n);
+            Address node = nodes.get(n++);
             start(node, payload);
-            if (++n >= nodes.size()) {
+            if (n == nodes.size()) {
                 n = 0;
             }
         }
