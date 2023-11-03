@@ -1,6 +1,7 @@
 package org.jgroups.demo.rpc;
 
 import lombok.extern.slf4j.Slf4j;
+import org.jgroups.Address;
 import org.jgroups.JChannel;
 import org.jgroups.Receiver;
 import org.jgroups.View;
@@ -112,8 +113,8 @@ public class Node<P> implements Receiver, Closeable {
     }
 
     private void rebalance(View view) {
-        Rebalance<P> rebalance = new Rebalance<>(payload,
-                view.getMembers(),
+        List<Address> nodes = view.getMembers();
+        Rebalance<P> rebalance = new Rebalance<>(payload, nodes,
                 rpcDispatcher
         );
         Thread t = new Thread(rebalance);
