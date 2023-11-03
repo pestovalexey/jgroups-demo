@@ -1,4 +1,4 @@
-package org.jgroups.demo.norpc;
+package org.jgroups.demo.norpc.listener;
 
 import java.util.List;
 

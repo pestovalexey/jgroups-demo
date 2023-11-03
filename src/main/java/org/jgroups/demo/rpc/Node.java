@@ -84,7 +84,7 @@ public class Node<P> implements Receiver, Closeable {
 
     /**
      *
-     * @param cluster
+     * @param cluster to connect
      * @throws Exception e
      */
     public void connect(String cluster) throws Exception {

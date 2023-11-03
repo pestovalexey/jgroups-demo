@@ -1,4 +1,4 @@
-package org.jgroups.demo.norpc;
+package org.jgroups.demo.norpc.listener;
 
 @FunctionalInterface
 public interface StartListener<P> {
