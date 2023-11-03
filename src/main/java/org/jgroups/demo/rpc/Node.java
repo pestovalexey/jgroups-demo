@@ -136,9 +136,8 @@ public class Node<P> implements Receiver, Closeable {
     }
 
     public void start(StartObject<P> object) {
-        P payload = object.getPayload();
-        notifyStartListeners(payload);
-        payloadLocal.add(payload);
+        notifyStartListeners(object.getPayload());
+        payloadLocal.add(object.getPayload());
     }
 
     private void notifyStartListeners(P payload) {
