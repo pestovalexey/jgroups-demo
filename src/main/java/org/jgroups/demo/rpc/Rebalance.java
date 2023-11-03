@@ -31,13 +31,9 @@ public class Rebalance<P> implements Runnable {
     }
 
     private void stopAll() throws Exception {
-        String name = "stopAll";
-        Method method = Node.class.getMethod(name);
-
-        // MethodCall call = new MethodCall(method);
-        //RequestOptions opts = new RequestOptions(ResponseMode.GET_ALL, 0);
-
-        dispatcher.callRemoteMethods(null, name, null, null, RequestOptions.SYNC());
+        dispatcher.callRemoteMethods(null, "stopAll", null, null,
+                RequestOptions.SYNC()
+        );
     }
 
     private void startRoundRobin() throws Exception {
@@ -54,8 +50,8 @@ public class Rebalance<P> implements Runnable {
     private void start(Address node, P payload) throws Exception {
         Method method = Node.class.getMethod("start", Object.class);
         MethodCall call = new MethodCall(method, payload);
-
-        dispatcher.callRemoteMethod(node, call, RequestOptions.SYNC());
+        dispatcher.callRemoteMethod(node, call,
+                RequestOptions.SYNC());
 
     }
 }
