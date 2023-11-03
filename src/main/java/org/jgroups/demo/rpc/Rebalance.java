@@ -52,9 +52,8 @@ public class Rebalance<P> implements Runnable {
     }
 
     private void start(Address node, P payload) throws Exception {
-        Method method = nodeApp.getClass().getMethod("start", Object.class);
+        Method method = Node.class.getMethod("start", Object.class);
         MethodCall call = new MethodCall(method, payload);
-        //RequestOptions opts = new RequestOptions(ResponseMode.GET_ALL, 0);
 
         dispatcher.callRemoteMethod(node, call, RequestOptions.SYNC());
 
