@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.jgroups.Address;
 import org.jgroups.blocks.MethodCall;
 import org.jgroups.blocks.RequestOptions;
-import org.jgroups.blocks.ResponseMode;
 import org.jgroups.blocks.RpcDispatcher;
 
 import java.lang.reflect.Method;
