@@ -13,10 +13,15 @@ repositories {
 dependencies {
     // https://mvnrepository.com/artifact/org.jgroups/jgroups
     implementation 'org.jgroups:jgroups:5.2.18.Final'
+    implementation 'org.jgroups:jgroups-raft:1.0.11.Final'
 
     // Lombok
     compileOnly 'org.projectlombok:lombok:1.18.28'
     annotationProcessor 'org.projectlombok:lombok:1.18.28'
+
+    implementation 'org.apache.logging.log4j:log4j-api:2.19.0'
+    implementation 'org.apache.logging.log4j:log4j-core:2.19.0'
+    implementation 'org.apache.logging.log4j:log4j-slf4j2-impl:2.19.0'
 
     testImplementation platform('org.junit:junit-bom:5.9.1')
     testImplementation 'org.junit.jupiter:junit-jupiter'
