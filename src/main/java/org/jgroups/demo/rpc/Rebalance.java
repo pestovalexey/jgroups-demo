@@ -40,7 +40,7 @@ public class Rebalance<P> implements Runnable {
         for (P payload : payload) {
             Address node = nodes.get(n++);
             start(node, payload);
-            if (n == nodes.size()) {
+            if (n >= nodes.size()) {
                 n = 0;
             }
         }
