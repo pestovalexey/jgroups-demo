@@ -22,10 +22,8 @@ class App {
 
         waitQuit();
 
-        // Добавилась конфигурация
-        List<Config> list = new LinkedList<>(ConfigService.getConfigs());
-        list.add(new Config(4));
-        node.setPayload(list);
+        // Добавились конфигурации
+        node.setPayload(ConfigService.getNewConfigs());
 
         waitQuit();
 
