@@ -17,7 +17,6 @@ public class Rebalance<P> implements Runnable {
     private final List<P> payload;
     private final List<Address> nodes;
     private final RpcDispatcher dispatcher;
-    private final Node<P> nodeApp;
 
     @Override
     public void run() {
@@ -51,7 +50,7 @@ public class Rebalance<P> implements Runnable {
         Method method = Node.class.getMethod("start", Object.class);
         MethodCall call = new MethodCall(method, payload);
         dispatcher.callRemoteMethod(node, call,
-                RequestOptions.SYNC());
-
+                RequestOptions.SYNC()
+        );
     }
 }

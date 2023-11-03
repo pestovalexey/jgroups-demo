@@ -113,10 +113,9 @@ public class Node<P> implements Receiver, Closeable {
 
     private void rebalance(View view) {
         List<Address> nodes = view.getMembers();
-        Rebalance<P> rebalance = new Rebalance<>(
-                payload, nodes,
-                dispatcher,
-                this
+        Rebalance<P> rebalance = new Rebalance<>(payload,
+                nodes,
+                dispatcher
         );
         Thread t = new Thread(rebalance);
         t.setDaemon(false);
