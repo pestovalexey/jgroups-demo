@@ -1,4 +1,4 @@
-package org.jgroups.demo.rpc.main;
+package org.jgroups.demo.main;
 
 import java.util.List;
 

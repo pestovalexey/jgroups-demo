@@ -37,7 +37,7 @@ public class Node<P> implements Receiver, RoleChange, Closeable {
     /**
      * Shared State
      */
-    private final List<P> payloads = new LinkedList<>();
+    private final List<P> payload = new LinkedList<>();
 
     private final JChannel jChannel;
     private final RaftHandle raftHandle;
@@ -65,9 +65,6 @@ public class Node<P> implements Receiver, RoleChange, Closeable {
     }
 
     /**
-     * @param name             Node name
-     * @param config           Xml config file path
-     * @param timeout          All requests timeout and setState timeout
      * @param rebalanceFactory RebalanceFactory
      */
     public Node(String name,
@@ -118,9 +115,9 @@ public class Node<P> implements Receiver, RoleChange, Closeable {
         jChannel.connect(cluster);
         jChannel.getState(null, timeout);
 
-        synchronized (payloads) {
-            if (payloads.isEmpty()) {
-                payloads.addAll(state);
+        synchronized (payload) {
+            if (payload.isEmpty()) {
+                payload.addAll(state);
             }
         }
     }
@@ -136,7 +133,7 @@ public class Node<P> implements Receiver, RoleChange, Closeable {
     @Override
     public void viewAccepted(View view) {
         log.info("view {}", view);
-        if (payloads.isEmpty()) {
+        if (payload.isEmpty()) {
             return;
         }
         if (raftHandle.isLeader()) {
@@ -171,40 +168,55 @@ public class Node<P> implements Receiver, RoleChange, Closeable {
      */
     private void rebalance(View view) {
         var nodes = view.getMembers();
-        var rebalance = rebalanceFactory.create(payloads, nodes, remoteNodeMethodDispatcher);
+        var rebalance = rebalanceFactory.create(payload, nodes, remoteNodeMethodDispatcher);
         rebalanceExecutor.submit(rebalance);
     }
 
     @Override
     public void getState(OutputStream output) throws Exception {
-        synchronized (payloads) {
-            Util.objectToStream(payloads, new DataOutputStream(output));
+        synchronized (payload) {
+            Util.objectToStream(payload, new DataOutputStream(output));
         }
     }
 
     @Override
     public void setState(InputStream input) throws Exception {
-        synchronized (payloads) {
+        synchronized (payload) {
             List<P> fromStream = Util.objectFromStream(new DataInputStream(input));
-            payloads.clear();
-            payloads.addAll(fromStream);
+            payload.clear();
+            payload.addAll(fromStream);
         }
     }
 
     /**
      * API
-     * Replicates state on all nodes, then run rebalance
+     * Replicate state on all nodes, then run rebalance
      */
     public void setState(List<P> state) throws Exception {
         var view = jChannel.getView();
         if (canOperate(view)) {
-            synchronized (payloads) {
-                payloads.clear();
-                payloads.addAll(state);
+            synchronized (payload) {
+                payload.clear();
+                payload.addAll(state);
             }
             var local = jChannel.address();
             remoteNodeMethodDispatcher.callRemoteGetState(local);
             rebalance(view);
+        }
+    }
+
+    /**
+     * API
+     * Replicate change
+     */
+    private void addReplica(P p) {
+        var view = jChannel.getView();
+        if (canOperate(view)) {
+            synchronized (payload) {
+                payload.add(p);
+
+                // TODO
+            }
         }
     }
 

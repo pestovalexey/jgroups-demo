@@ -9,7 +9,7 @@ import org.jgroups.blocks.RequestOptions;
 import org.jgroups.blocks.RpcDispatcher;
 
 /**
- * Calls methods on remote Nodes
+ * Call methods on remote nodes
  * @param <P>
  */
 @Slf4j

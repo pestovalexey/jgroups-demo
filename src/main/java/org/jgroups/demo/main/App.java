@@ -1,4 +1,4 @@
-package org.jgroups.demo.rpc.main;
+package org.jgroups.demo.main;
 
 import lombok.extern.slf4j.Slf4j;
 import org.jgroups.demo.rpc.Node;
@@ -11,21 +11,24 @@ import java.util.List;
 @Slf4j
 class App {
     final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-    final static int REQUEST_TIMEOUT = 10000;
+    final int timeout = 10000;
 
     public static void main(String[] args) {
         var name = args[0];
         var cluster = args[1];
 
-        new App().run(name, cluster);
+        new App().demo(name, cluster);
     }
 
-    void run(String name, String cluster) {
+    void demo(String name, String cluster) {
         try {
-            Node<Config> node = new Node<>(name, "raft.xml", REQUEST_TIMEOUT);
+            Node<Config> node = new Node<>(name, "raft.xml", timeout);
+
+            // Register listeners
             node.addStopListener(configs -> configs.forEach(Config::stop));
             node.addStartListener(Config::start);
 
+            // Connection
             List<Config> configs = ConfigService.getConfigs();
             node.connect(cluster, configs);
 

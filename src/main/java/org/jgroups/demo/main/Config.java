@@ -1,4 +1,4 @@
-package org.jgroups.demo.rpc.main;
+package org.jgroups.demo.main;
 
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
