@@ -61,4 +61,5 @@
     <raft.REDIRECT/>
     <raft.CLIENT bind_addr="0.0.0.0" />
     <pbcast.STATE_TRANSFER />
+    <pbcast.FLUSH />
 </config>

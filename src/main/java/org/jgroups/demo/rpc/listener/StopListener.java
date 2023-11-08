@@ -7,8 +7,8 @@ public interface StopListener<P> {
 
     /**
      *
-     * @param payloadList List<P>
+     * @param payloads List<P>
      */
-    void onStopAll(List<P> payloadList);
+    void onStopAll(List<P> payloads);
 
 }

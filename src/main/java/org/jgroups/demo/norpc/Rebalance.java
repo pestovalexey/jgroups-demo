@@ -25,7 +25,7 @@ public class Rebalance<P> implements Runnable {
 
     @Override
     public void run() {
-        log.info("Rebalance...");
+        log.info("RoundRobinRebalance...");
         try {
             List<Address> nodes = view.getMembers();
             for (Address node : nodes) {
@@ -74,9 +74,9 @@ public class Rebalance<P> implements Runnable {
     }
 
     private void sendStart(Address node, P payload) throws Exception {
-        StartObject<P> object = new StartObject<>(payload);
-        ObjectMessage message = new ObjectMessage(node, object);
-        message.setSrc(jChannel.getAddress());
+        var object = new StartObject<>(payload);
+        var message = new ObjectMessage(node, object).
+                setSrc(jChannel.getAddress());
 
         jChannel.send(message);
     }

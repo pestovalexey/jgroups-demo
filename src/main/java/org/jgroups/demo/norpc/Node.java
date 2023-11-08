@@ -178,7 +178,7 @@ public class Node<P> implements Receiver, Closeable {
 
     /**
      *
-     * @param object StartObject<P>
+     * @param object Payload<P>
      */
     private void notifyStartListeners(StartObject<P> object) {
         for (StartListener<P> listener : startListeners) {
@@ -221,22 +221,6 @@ public class Node<P> implements Receiver, Closeable {
     @Override
     public void close() {
         jChannel.close();
-    }
-
-    /**
-     * @param node Node to add to a Cluster
-     * @throws Exception e
-     */
-    public void addNode(String node) throws Exception {
-        raftHandle.addServer(node);
-    }
-
-    /**
-     * @param node Node to remove from a Cluster
-     * @throws Exception e
-     */
-    public void removeNode(String node) throws Exception {
-        raftHandle.removeServer(node);
     }
 
 }
