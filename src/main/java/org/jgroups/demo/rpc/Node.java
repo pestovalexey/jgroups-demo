@@ -104,10 +104,11 @@ public class Node<P> implements Receiver, RoleChange, Closeable {
     }
 
     /**
+     * API
      * Ignore state if payloads shared state is not empty
      *
-     * @param cluster To connect
-     * @param state   State to balance in cluster
+     * @param cluster Name to connection
+     * @param state   State (or Payload) for balancing in cluster
      */
     public void connect(String cluster, List<P> state) throws Exception {
         jChannel.connect(cluster);

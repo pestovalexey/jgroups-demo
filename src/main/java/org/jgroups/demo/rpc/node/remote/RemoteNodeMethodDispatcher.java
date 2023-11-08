@@ -28,7 +28,7 @@ public class RemoteNodeMethodDispatcher<P> {
     }
 
     /**
-     * Unicast start payload on the nodes
+     * Unicast start payload on the all the nodes
      *
      * @param payload P
      * @param node    Address
@@ -45,8 +45,7 @@ public class RemoteNodeMethodDispatcher<P> {
     /**
      * Multicast get state (update) on all the nodes
      *
-     * @param node From
-     * @throws Exception throw
+     * @param node From where needs to getState
      */
     public void callRemoteGetState(Address node) throws Exception {
         var method = RemoteNodeMethods.class.getMethod("getState", Address.class, int.class);
