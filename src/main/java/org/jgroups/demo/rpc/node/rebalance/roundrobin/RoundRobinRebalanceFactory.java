@@ -3,7 +3,7 @@ package org.jgroups.demo.rpc.node.rebalance.roundrobin;
 import org.jgroups.Address;
 import org.jgroups.demo.rpc.node.rebalance.Rebalance;
 import org.jgroups.demo.rpc.node.rebalance.RebalanceFactory;
-import org.jgroups.demo.rpc.node.remote.RemoteNodeMethodDispatcher;
+import org.jgroups.demo.rpc.node.rpc.RemoteNodeMethodDispatcher;
 
 import java.util.List;
 

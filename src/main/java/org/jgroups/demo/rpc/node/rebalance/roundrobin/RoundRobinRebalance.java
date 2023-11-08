@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jgroups.Address;
 import org.jgroups.demo.rpc.node.rebalance.Rebalance;
-import org.jgroups.demo.rpc.node.remote.RemoteNodeMethodDispatcher;
+import org.jgroups.demo.rpc.node.rpc.RemoteNodeMethodDispatcher;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package org.jgroups.demo.rpc.node.remote;
+package org.jgroups.demo.rpc.node.rpc;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -8,6 +8,10 @@ import org.jgroups.blocks.MethodCall;
 import org.jgroups.blocks.RequestOptions;
 import org.jgroups.blocks.RpcDispatcher;
 
+/**
+ * Calls methods on remote Nodes
+ * @param <P>
+ */
 @Slf4j
 @RequiredArgsConstructor
 public class RemoteNodeMethodDispatcher<P> {
@@ -16,7 +20,7 @@ public class RemoteNodeMethodDispatcher<P> {
     private final int timeout;
 
     /**
-     * Multicast stop all payloads on all the nodes
+     * Stop all payloads on all nodes. Multicast
      */
     public void callRemoteNotifyStopListeners() throws Exception {
         var method = RemoteNodeMethods.class.getMethod("notifyStopListeners");
@@ -28,10 +32,10 @@ public class RemoteNodeMethodDispatcher<P> {
     }
 
     /**
-     * Unicast start payload on the all the nodes
+     * Start payload on a single node. Unicast
      *
      * @param payload P
-     * @param node    Address
+     * @param node    Address node
      */
     public void callRemoteNotifyStartListeners(P payload, Address node) throws Exception {
         var method = RemoteNodeMethods.class.getMethod("notifyStartListeners", Object.class);
@@ -43,7 +47,7 @@ public class RemoteNodeMethodDispatcher<P> {
     }
 
     /**
-     * Multicast get state (update) on all the nodes
+     * Get (Update) state on all nodes. Multicast
      *
      * @param node From where needs to getState
      */

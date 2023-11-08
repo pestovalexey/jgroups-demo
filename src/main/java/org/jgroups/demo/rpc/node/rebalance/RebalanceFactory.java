@@ -1,7 +1,7 @@
 package org.jgroups.demo.rpc.node.rebalance;
 
 import org.jgroups.Address;
-import org.jgroups.demo.rpc.node.remote.RemoteNodeMethodDispatcher;
+import org.jgroups.demo.rpc.node.rpc.RemoteNodeMethodDispatcher;
 
 import java.util.List;
 

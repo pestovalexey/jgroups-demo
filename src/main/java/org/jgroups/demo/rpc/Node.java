@@ -9,8 +9,8 @@ import org.jgroups.demo.rpc.listener.StopListener;
 import org.jgroups.demo.rpc.node.rebalance.RebalanceExecutor;
 import org.jgroups.demo.rpc.node.rebalance.RebalanceFactory;
 import org.jgroups.demo.rpc.node.rebalance.roundrobin.RoundRobinRebalanceFactory;
-import org.jgroups.demo.rpc.node.remote.RemoteNodeMethodDispatcher;
-import org.jgroups.demo.rpc.node.remote.RemoteNodeMethods;
+import org.jgroups.demo.rpc.node.rpc.RemoteNodeMethodDispatcher;
+import org.jgroups.demo.rpc.node.rpc.RemoteNodeMethods;
 import org.jgroups.protocols.raft.RAFT;
 import org.jgroups.protocols.raft.RAFT.RoleChange;
 import org.jgroups.protocols.raft.Role;
@@ -28,6 +28,10 @@ import java.util.List;
 
 import static java.util.Objects.requireNonNull;
 
+/**
+ * A Node in a Cluster with automatic Load Balancing and High Consistency (CP)
+ * @param <P>
+ */
 @Slf4j
 public class Node<P> implements Receiver, RoleChange, Closeable {
     /**

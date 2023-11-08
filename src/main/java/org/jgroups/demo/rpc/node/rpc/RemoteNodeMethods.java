@@ -1,4 +1,4 @@
-package org.jgroups.demo.rpc.node.remote;
+package org.jgroups.demo.rpc.node.rpc;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +12,10 @@ import org.jgroups.demo.rpc.listener.StopListener;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Node methods that might be invoked remotely with RPC
+ * @param <P>
+ */
 @Slf4j
 @Getter
 @Setter
@@ -23,15 +27,21 @@ public class RemoteNodeMethods<P> {
 
     private final JChannel jChannel;
     /**
-     * Local Node's State
+     * Local Node's state
      */
     private final List<P> payloadsNode = new LinkedList<>();
 
+    /**
+     * Notifies Stop listeners, i.e. executes callbacks
+     */
     public void notifyStartListeners(P payload) {
         startListeners.forEach(listener -> listener.onStart(payload));
         payloadsNode.add(payload);
     }
 
+    /**
+     * Notifies Start listeners, executes callbacks
+     */
     public void notifyStopListeners() {
         if (payloadsNode.isEmpty()) {
             return;
@@ -40,6 +50,9 @@ public class RemoteNodeMethods<P> {
         payloadsNode.clear();
     }
 
+    /**
+     * A way to replicate new state to all nodes
+     */
     public void getState(Address source, int timeout) throws Exception {
         jChannel.getState(source, timeout);
     }
