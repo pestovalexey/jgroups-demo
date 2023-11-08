@@ -27,7 +27,7 @@ public class RemoteNodeMethods<P> {
 
     private final JChannel jChannel;
     /**
-     * Local Node's state
+     * Payload for one Node
      */
     private final List<P> payloadsNode = new LinkedList<>();
 
