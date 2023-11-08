@@ -29,25 +29,25 @@ public class RemoteNodeMethods<P> {
     /**
      * Payload for one Node
      */
-    private final List<P> payloadsNode = new LinkedList<>();
+    private final List<P> payloadNode = new LinkedList<>();
 
     /**
      * Notifies Stop listeners, i.e. executes callbacks
      */
     public void notifyStartListeners(P payload) {
         startListeners.forEach(listener -> listener.onStart(payload));
-        payloadsNode.add(payload);
+        payloadNode.add(payload);
     }
 
     /**
      * Notifies Start listeners, executes callbacks
      */
     public void notifyStopListeners() {
-        if (payloadsNode.isEmpty()) {
+        if (payloadNode.isEmpty()) {
             return;
         }
-        stopListeners.forEach(listener -> listener.onStopAll(payloadsNode));
-        payloadsNode.clear();
+        stopListeners.forEach(listener -> listener.onStopAll(payloadNode));
+        payloadNode.clear();
     }
 
     /**
